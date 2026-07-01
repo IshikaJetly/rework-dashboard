@@ -33,6 +33,24 @@
   .last-updated { font-size: 11px; color: var(--muted); }
   .divider { height: 1px; background: var(--border); margin: 18px 28px; }
 
+  /* ── FILTER BAR (NEW) ── */
+  .filter-bar { padding: 0 28px; display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .filter-group { display: flex; flex-direction: column; gap: 5px; }
+  .filter-group label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .filter-bar select, .filter-bar input[type="date"] {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-size: 13px; padding: 6px 10px; outline: none; transition: border-color .15s;
+  }
+  .filter-bar select:focus, .filter-bar input[type="date"]:focus { border-color: var(--accent); }
+  .filter-bar input[type="date"] { color-scheme: dark; }
+  .filter-mode-tabs { display: flex; gap: 3px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 3px; }
+  .tab-btn { padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: all .15s; }
+  .tab-btn.active { background: var(--accent); color: #fff; }
+  .apply-btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity .15s; }
+  .apply-btn:hover { opacity: .85; }
+  #range-inputs { display: none; align-items: flex-end; gap: 10px; }
+  #range-inputs.visible { display: flex; }
+
   .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 28px; }
   .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; position: relative; overflow: hidden; }
   .kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
@@ -48,16 +66,21 @@
   .kpi.amber .kpi-value { color: var(--amber); }
   .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
 
-  .ops-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 28px 0; }
+  /* ops-row updated to 4 cols (NEW: dials + texts added) */
+  .ops-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 12px 28px 0; }
   .ops-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 16px; }
   .ops-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .ops-icon.purple { background: rgba(155,127,244,.15); color: var(--purple); }
-  .ops-icon.teal { background: rgba(45,212,160,.15); color: var(--green); }
-  .ops-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+  .ops-icon.teal   { background: rgba(45,212,160,.15);  color: var(--green); }
+  .ops-icon.amber  { background: rgba(245,166,35,.15);  color: var(--amber); }
+  .ops-icon.blue   { background: rgba(79,142,247,.15);  color: var(--accent); }
+  .ops-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
   .ops-info .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
   .ops-info .value { font-size: 22px; font-weight: 600; margin-top: 2px; }
   .ops-info.purple .value { color: var(--purple); }
-  .ops-info.teal .value { color: var(--green); }
+  .ops-info.teal   .value { color: var(--green); }
+  .ops-info.amber  .value { color: var(--amber); }
+  .ops-info.blue   .value { color: var(--accent); }
   .ops-info .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 28px 0; }
@@ -97,6 +120,15 @@
   .rate-track { width: 60px; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
   .rate-fill { height: 100%; border-radius: 3px; }
 
+  /* QA section (NEW) */
+  .qa-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .qa-stat { background: var(--surface2); border-radius: 8px; padding: 12px 14px; }
+  .qa-stat .ql { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .qa-stat .qv { font-size: 22px; font-weight: 600; }
+  .qa-stat .qv.green { color: var(--green); }
+  .qa-stat .qv.amber { color: var(--amber); }
+  .qa-stat .qs { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
   .chart-wrap { position: relative; height: 200px; }
 
   .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh; gap: 16px; }
@@ -106,13 +138,14 @@
   .error-box { margin: 40px 28px; background: rgba(240,91,91,.08); border: 1px solid rgba(240,91,91,.3); border-radius: 10px; padding: 20px; color: var(--red); font-size: 13px; }
   .footer { padding: 20px 28px; color: var(--muted); font-size: 11px; text-align: center; border-top: 1px solid var(--border); margin-top: 20px; }
 
+  @media (max-width: 1100px) { .ops-row { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 900px) {
     .kpi-row { grid-template-columns: 1fr 1fr; }
     .grid-2, .ops-row { grid-template-columns: 1fr; }
   }
   @media (max-width: 500px) {
     .kpi-row { grid-template-columns: 1fr; }
-    .header, .kpi-row, .ops-row, .grid-2, .divider { padding-left: 16px; padding-right: 16px; }
+    .header, .kpi-row, .ops-row, .grid-2, .divider, .filter-bar { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 </head>
@@ -121,40 +154,48 @@
   <div class="loading"><div class="spinner"></div><div class="loading-text">Fetching live data...</div></div>
 </div>
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────────────────
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5waICFvJKIRRwOWwh-8VkokRdS4yhS9wv3SM2slQShGl0scb0abArZByuc_FmRRgB/exec';
 
-// ── FETCH ────────────────────────────────────────────────────────────────────
-// Apps Script redirects to a googleusercontent.com URL.
-// Using no-cors gives an opaque response we can't read.
-// Solution: use a JSONP-style callback that Apps Script supports natively.
-function fetchData(month, year) {
+// ── FILTER STATE (NEW) ────────────────────────────────────────────────────────
+let _filterMode = 'month';
+
+function setMode(mode) {
+  _filterMode = mode;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.getElementById('range-inputs').classList.toggle('visible', mode === 'range');
+  document.getElementById('month-inputs').style.display = mode === 'range' ? 'none' : 'flex';
+}
+
+function applyFilters() {
+  if (_filterMode === 'range') {
+    const from = document.getElementById('fromDate').value;
+    const to   = document.getElementById('toDate').value;
+    if (!from || !to) { alert('Please select both From and To dates.'); return; }
+    init({ mode: 'range', fromDate: from, toDate: to });
+  } else {
+    const month = parseInt(document.getElementById('selMonth').value);
+    const year  = parseInt(document.getElementById('selYear').value);
+    init({ mode: 'month', month, year });
+  }
+}
+
+// ── FETCH (JSONP) ─────────────────────────────────────────────────────────────
+function fetchData(params) {
   return new Promise((resolve, reject) => {
     const cbName = 'cb_' + Date.now();
     const script = document.createElement('script');
-    const timeout = setTimeout(() => {
-      cleanup();
-      reject(new Error('Request timed out after 15s'));
-    }, 15000);
-
-    function cleanup() {
-      clearTimeout(timeout);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-
-    window[cbName] = function(data) {
-      cleanup();
-      resolve(data);
-    };
-
+    const timeout = setTimeout(() => { cleanup(); reject(new Error('Request timed out after 15s')); }, 15000);
+    function cleanup() { clearTimeout(timeout); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cbName] = function(data) { cleanup(); resolve(data); };
     script.onerror = () => { cleanup(); reject(new Error('Script load failed — check SCRIPT_URL')); };
-    script.src = `${SCRIPT_URL}?source=rework&month=${month}&year=${year}&callback=${cbName}`;
+    const qs = Object.entries({ ...params, source: 'rework', callback: cbName })
+      .map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&');
+    script.src = SCRIPT_URL + '?' + qs;
     document.head.appendChild(script);
   });
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 function signal(r) {
   if (r >= 80) return '<span class="badge badge-g">strong</span>';
   if (r >= 60) return '<span class="badge badge-b">ok</span>';
@@ -171,20 +212,22 @@ function abbr(s) {
           .replace('Milberg Grossman','MG');
 }
 
-// ── RENDER ───────────────────────────────────────────────────────────────────
+// ── RENDER ────────────────────────────────────────────────────────────────────
 function render(data) {
-  const { meta, summary, ops, weekly, topReasons, agentBreakdown, firmBreakdown } = data;
+  const { meta, summary, ops, qa, weekly, topReasons, agentBreakdown, firmBreakdown } = data;
   const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
 
   document.getElementById('app').innerHTML = `
+
+    <!-- HEADER -->
     <div class="header">
       <div class="header-left">
         <h1>Rework operations dashboard</h1>
         <div class="sub">All law firms · Raw tab live · auto-filters to current month</div>
       </div>
       <div class="header-right">
-        <span class="month-badge">${meta.monthName} ${meta.year}</span>
-        <button class="refresh-btn" onclick="init()">
+        <span class="month-badge">${meta.label || (meta.monthName + ' ' + meta.year)}</span>
+        <button class="refresh-btn" onclick="applyFilters()">
           <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 9a9 9 0 0115-3M20 15a9 9 0 01-15 3"/></svg>
           Refresh
         </button>
@@ -192,18 +235,59 @@ function render(data) {
       </div>
     </div>
 
+    <!-- FILTER BAR (NEW) -->
+    <div style="margin-top:14px;" class="filter-bar">
+      <div class="filter-group">
+        <label>Filter mode</label>
+        <div class="filter-mode-tabs">
+          <button class="tab-btn active" data-mode="month" onclick="setMode('month')">By month</button>
+          <button class="tab-btn" data-mode="range" onclick="setMode('range')">Date range</button>
+        </div>
+      </div>
+      <div id="month-inputs" style="display:flex;align-items:flex-end;gap:10px;">
+        <div class="filter-group">
+          <label>Month</label>
+          <select id="selMonth">
+            <option value="1">January</option><option value="2">February</option>
+            <option value="3">March</option><option value="4">April</option>
+            <option value="5">May</option><option value="6">June</option>
+            <option value="7">July</option><option value="8">August</option>
+            <option value="9">September</option><option value="10">October</option>
+            <option value="11">November</option><option value="12">December</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Year</label>
+          <select id="selYear">
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+          </select>
+        </div>
+      </div>
+      <div id="range-inputs">
+        <div class="filter-group"><label>From (Date of Rework)</label><input type="date" id="fromDate"></div>
+        <div class="filter-group"><label>To</label><input type="date" id="toDate"></div>
+      </div>
+      <div class="filter-group">
+        <label>&nbsp;</label>
+        <button class="apply-btn" onclick="applyFilters()">Apply</button>
+      </div>
+    </div>
+
     <div class="divider"></div>
 
+    <!-- KPI ROW — unchanged -->
     <div class="kpi-row">
-      <div class="kpi blue"><div class="kpi-label">Total reworks</div><div class="kpi-value">${summary.total}</div><div class="kpi-sub">Col G = Rework · ${meta.monthName}</div></div>
+      <div class="kpi blue"><div class="kpi-label">Total reworks</div><div class="kpi-value">${summary.total}</div><div class="kpi-sub">Col G = Rework · ${meta.label || meta.monthName}</div></div>
       <div class="kpi green"><div class="kpi-label">Converted → approved</div><div class="kpi-value">${summary.approved}</div><div class="kpi-sub">${summary.approvalRate}% terminal approval rate</div></div>
       <div class="kpi red"><div class="kpi-label">Rejected</div><div class="kpi-value">${summary.rejected}</div><div class="kpi-sub">${summary.rejectionRate}% terminal rejection rate</div></div>
       <div class="kpi amber"><div class="kpi-label">Still open</div><div class="kpi-value">${summary.open}</div><div class="kpi-sub">${pct(summary.open, summary.total)}% in-flight</div></div>
     </div>
 
+    <!-- OPS ROW — existing 2 cards kept + 2 new added -->
     <div class="ops-row">
       <div class="ops-card">
-        <div class="ops-icon purple"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg></div>
+        <div class="ops-icon purple"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg></div>
         <div class="ops-info purple">
           <div class="label">Avg time to pick up</div>
           <div class="value">${ops.avgTimeToPickupDays !== null ? ops.avgTimeToPickupDays + ' days' : '—'}</div>
@@ -211,15 +295,32 @@ function render(data) {
         </div>
       </div>
       <div class="ops-card">
-        <div class="ops-icon teal"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        <div class="ops-icon teal"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
         <div class="ops-info teal">
           <div class="label">Avg dials per rework</div>
           <div class="value">${ops.avgDials !== null ? ops.avgDials : '—'}</div>
           <div class="sub">Col E · Ops rework tab${ops.sampleSize.dials > 0 ? ' · ' + ops.sampleSize.dials + ' cases' : ' · pending data'}</div>
         </div>
       </div>
+      <div class="ops-card">
+        <div class="ops-icon amber"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg></div>
+        <div class="ops-info amber">
+          <div class="label">Avg texts per rework</div>
+          <div class="value">${ops.avgTexts !== null && ops.avgTexts !== undefined ? ops.avgTexts : '—'}</div>
+          <div class="sub">Ops rework tab · column TBC</div>
+        </div>
+      </div>
+      <div class="ops-card">
+        <div class="ops-icon blue"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="ops-info blue">
+          <div class="label">QA feedback shared</div>
+          <div class="value">${qa ? qa.feedbackPct + '%' : '—'}</div>
+          <div class="sub">${qa ? qa.feedback + ' of ' + qa.total + ' cases · Col T' : 'pending data'}</div>
+        </div>
+      </div>
     </div>
 
+    <!-- WEEKLY TABLE + CHART — unchanged -->
     <div class="grid-2">
       <div class="card">
         <div class="card-title">Weekly breakdown — Col H outcomes</div>
@@ -242,6 +343,7 @@ function render(data) {
       </div>
     </div>
 
+    <!-- REASONS + FIRM — unchanged -->
     <div class="grid-2">
       <div class="card">
         <div class="card-title">Top error reasons — Col K to O</div>
@@ -253,9 +355,10 @@ function render(data) {
       </div>
     </div>
 
+    <!-- AGENT TABLE — unchanged -->
     <div style="padding:12px 28px 0">
       <div class="card">
-        <div class="card-title">Agent breakdown — ${meta.monthName} reworks</div>
+        <div class="card-title">Agent breakdown — ${meta.label || meta.monthName} reworks</div>
         <table class="atable">
           <thead><tr><th>Agent</th><th>Total</th><th>Approved</th><th>Rejected</th><th>Approval rate</th></tr></thead>
           <tbody>
@@ -273,10 +376,49 @@ function render(data) {
       </div>
     </div>
 
-    <div class="footer">Live data · Raw tab + Ops rework tab · Auto-filters to current month · Last fetched ${new Date(meta.generatedAt).toLocaleString('en-IN', {timeZone:'Asia/Kolkata'})} IST</div>
+    <!-- QA AUDIT SECTION (NEW) -->
+    <div style="padding:12px 28px 0">
+      <div class="card">
+        <div class="card-title">QA audit — Col Q (valid/invalid) + Col T (feedback shared)</div>
+        <div class="qa-stats">
+          <div class="qa-stat">
+            <div class="ql">Valid reworks (Col Q = Valid)</div>
+            <div class="qv green">${qa ? qa.valid : '—'} <span style="font-size:14px;font-weight:400">(${qa ? qa.validPct + '%' : ''})</span></div>
+            <div class="qs">of ${qa ? qa.total : '—'} audited cases</div>
+          </div>
+          <div class="qa-stat">
+            <div class="ql">QA feedback shared (Col T = Yes)</div>
+            <div class="qv ${qa && qa.feedbackPct >= 80 ? 'green' : 'amber'}">${qa ? qa.feedback : '—'} <span style="font-size:14px;font-weight:400">(${qa ? qa.feedbackPct + '%' : ''})</span></div>
+            <div class="qs">of ${qa ? qa.total : '—'} audited cases</div>
+          </div>
+        </div>
+        <div class="card-title">Weekly QA coverage</div>
+        <table class="wtable">
+          <thead><tr><th>Week</th><th>Total</th><th>Valid (Col Q)</th><th>Valid %</th><th>Feedback shared (Col T)</th><th>Feedback %</th></tr></thead>
+          <tbody>
+            ${qa && qa.weekly ? qa.weekly.map(w => `<tr>
+              <td>W${w.week}</td>
+              <td>${w.total}</td>
+              <td class="${cc(w.validPct)}">${w.valid}</td>
+              <td class="${cc(w.validPct)}">${w.validPct}%</td>
+              <td class="${w.feedbackPct >= 80 ? 'hi' : w.feedbackPct < 50 ? 'lo' : 'wa'}">${w.feedback}</td>
+              <td class="${w.feedbackPct >= 80 ? 'hi' : w.feedbackPct < 50 ? 'lo' : 'wa'}">${w.feedbackPct}%</td>
+            </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:16px">No QA data for this period</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">Live data · Raw tab + Ops rework tab · Last fetched ${new Date(meta.generatedAt).toLocaleString('en-IN', {timeZone:'Asia/Kolkata'})} IST</div>
   `;
 
-  // Weekly stacked bar
+  // set filter dropdowns to match current data
+  const selMonth = document.getElementById('selMonth');
+  const selYear  = document.getElementById('selYear');
+  if (selMonth && meta.month) selMonth.value = meta.month;
+  if (selYear  && meta.year)  selYear.value  = meta.year;
+
+  // Weekly stacked bar — unchanged
   new Chart(document.getElementById('weeklyChart'), {
     type: 'bar',
     data: {
@@ -297,7 +439,7 @@ function render(data) {
     }
   });
 
-  // Reasons bars
+  // Reasons bars — unchanged
   const maxR = topReasons[0]?.count || 1;
   const bColors = ['#4f8ef7','#2dd4a0','#f5a623','#f05b5b','#9b7ff4','#4f8ef7','#2dd4a0','#f5a623'];
   document.getElementById('reasons-bars').innerHTML = topReasons.slice(0, 8).map((r, i) => `
@@ -307,7 +449,7 @@ function render(data) {
       <div class="bar-val">${r.count}</div>
     </div>`).join('');
 
-  // Firm chart
+  // Firm chart — unchanged
   new Chart(document.getElementById('firmChart'), {
     type: 'bar',
     data: {
@@ -328,12 +470,13 @@ function render(data) {
   });
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
-async function init() {
+// ── INIT ──────────────────────────────────────────────────────────────────────
+async function init(params) {
   document.getElementById('app').innerHTML = `<div class="loading"><div class="spinner"></div><div class="loading-text">Fetching live data...</div></div>`;
   try {
     const now = new Date();
-    const data = await fetchData(now.getMonth() + 1, now.getFullYear());
+    const p = params || { mode: 'month', month: now.getMonth() + 1, year: now.getFullYear() };
+    const data = await fetchData(p);
     if (data.error) throw new Error(data.error);
     render(data);
   } catch (err) {
